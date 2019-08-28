@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Bola : MonoBehaviour
 {
-
     public GameObject objetoTrilha;
     // Start is called before the first frame update
     void Start()
+    {
+        objetoTrilha.SetActive(false);
+
+    }
+
+    public void AtivarTrilha()
     {
         objetoTrilha.SetActive(true);
     }
@@ -16,10 +21,5 @@ public class Bola : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void AtivarTrilha()
-    {
-        objetoTrilha.SetActive(true);
     }
 }

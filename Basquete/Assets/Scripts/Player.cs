@@ -5,35 +5,49 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Bola bola;
+    public GameObject bolaObj;
 
     public GameObject playerCamera;
 
     public float distanciaBola = 2f;
 
-    public float ForcaArremesso = 550f;
+    public float forcaArremesso = 5f;
 
-    public bool SegurandoBola = true;
+    public bool segurandoBola = true;
 
-    // método Start é executado na criação do objeto
+
+   
+
+    // Metodo start é executado apenas na criação do objeto
     void Start()
     {
         bola.GetComponent<Rigidbody>().useGravity = false;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (SegurandoBola)
+        if (segurandoBola)
         {
             bola.transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanciaBola;
-
             if (Input.GetMouseButtonDown(0))
             {
                 bola.AtivarTrilha();
-                SegurandoBola = false;
+                segurandoBola = false;
                 bola.GetComponent<Rigidbody>().useGravity = true;
-                bola.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ForcaArremesso);
+                bola.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * forcaArremesso);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.gameObject == bolaObj)
+        {
+            bola.objetoTrilha.SetActive(false);
+            segurandoBola = true;
+            bola.GetComponent<Rigidbody>().useGravity = false;
         }
     }
 }
