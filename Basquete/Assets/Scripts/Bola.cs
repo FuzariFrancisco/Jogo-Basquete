@@ -5,10 +5,13 @@ using UnityEngine;
 public class Bola : MonoBehaviour
 {
     public GameObject objetoTrilha;
+    Rigidbody Rb;
+    public Player player;
     // Start is called before the first frame update
     void Start()
     {
         objetoTrilha.SetActive(false);
+        Rb = GetComponent<Rigidbody>();
 
     }
 
@@ -22,4 +25,18 @@ public class Bola : MonoBehaviour
     {
         
     }
+
+    public void ParaRotacao()
+    {
+        Rb.velocity = new Vector3(0,0,0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Fora")
+        {
+            player.VoltaBola();
+        }
+    }
+
 }

@@ -9,12 +9,18 @@ public class GameController : MonoBehaviour
     public Player player;
     public Text tempo;
 
-    public float Timer = 100f;
+    public float Timer = 10f;
 
     void Update()
     {
         Timer -= Time.deltaTime;
         tempo.text = "TEMPO: " + Mathf.Floor(Timer);
+
+        if (Timer <= 0)
+        {
+            SceneManager.LoadScene("MenuInicio");
+            Destroy(player);
+        }
     }
 
 }

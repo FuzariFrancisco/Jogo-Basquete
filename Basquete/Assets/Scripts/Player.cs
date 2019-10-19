@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public float forcaArremesso = 5f;
 
     public bool segurandoBola = true;
+    bool saiu = false;
 
 
    
@@ -28,11 +29,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (saiu)
+        {
+                bola.objetoTrilha.SetActive(false);
+                segurandoBola = true;
+                bola.GetComponent<Rigidbody>().useGravity = false;
+                saiu = false;
+        }
+
         if (segurandoBola)
         {
             bola.transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanciaBola;
             if (Input.GetMouseButtonDown(0))
             {
+                bola.ParaRotacao();
                 bola.AtivarTrilha();
                 segurandoBola = false;
                 bola.GetComponent<Rigidbody>().useGravity = true;
@@ -41,7 +51,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject == bolaObj)
         {
@@ -49,5 +59,10 @@ public class Player : MonoBehaviour
             segurandoBola = true;
             bola.GetComponent<Rigidbody>().useGravity = false;
         }
+    }
+
+    public void VoltaBola()
+    {
+        saiu = true;
     }
 }
