@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     public float distanciaBola = 2f;
 
-    public float forcaArremesso = 5f;
+    public float forcaArremesso = 0f;
 
     public bool segurandoBola = true;
     bool saiu = false;
@@ -40,13 +40,24 @@ public class Player : MonoBehaviour
         if (segurandoBola)
         {
             bola.transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanciaBola;
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
+            {
+                if (forcaArremesso<1000)
+                {
+                    forcaArremesso+=15;
+                    Debug.Log(forcaArremesso);
+                }
+                
+            }
+
+            if (Input.GetMouseButtonUp(0))
             {
                 bola.ParaRotacao();
                 bola.AtivarTrilha();
                 segurandoBola = false;
                 bola.GetComponent<Rigidbody>().useGravity = true;
                 bola.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * forcaArremesso);
+                forcaArremesso = 0;
             }
         }
     }
